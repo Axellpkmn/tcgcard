@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Carta Pokémon Holográfica</title>
+  <style>
+    body {
+      margin: 0;
+      background: #222;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .card {
+      width: 300px;
+      height: 450px;
+      border-radius: 15px;
+      border: 4px solid silver;
+      box-shadow: 0 0 25px rgba(255, 255, 255, 0.3);
+      color: #000;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card-inner {
+      background-color: rgba(255, 255, 255, 0.85);
+      border-radius: 10px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .card img {
+      width: 100%;
+      height: 100%;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    }
+
+    .hp {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-weight: bold;
+      color: red;
+    }
+
+    .type {
+      position: absolute;
+      top: 10px;
+      left: 15px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    /* === Efecto Holográfico === */
+    .holo-overlay {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: url('https://w7.pngwing.com/pngs/431/259/png-transparent-triangle-desktop-prism-geometric-triangle-textile-symmetry.png');
+      background-size: cover;
+      mix-blend-mode: overlay;
+      opacity: 0.3;
+      animation: shimmer 60s linear infinite;
+      pointer-events: none;
+      border-radius: 15px;
+      z-index: 2;
+    }
+
+    @keyframes shimmer {
+      0% {
+        background-position: 0 0;
+      }
+
+      100% {
+        background-position: 100% 100%;
+      }
+    }
+
+    /* Reflejos adicionales */
+    .card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at top left, rgba(255, 255, 255, 0.2), transparent),
+        radial-gradient(ellipse at bottom right, rgba(255, 255, 255, 0.1), transparent);
+      mix-blend-mode: soft-light;
+      pointer-events: none;
+      border-radius: 15px;
+      z-index: 1;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="card" data-tilt data-tilt-scale="1.05" data-tilt-max="25" data-tilt-speed="400" data-tilt-glare="true"
+    data-tilt-max-glare="0.4">
+    <div class="holo-overlay"></div>
+    <div class="card-inner">
+      <img src="https://mox.land/cdn/shop/files/sv4_ptbr_247.png?v=1701207865" alt="Pikachu" />
+    </div>
+  </div>
+
+  <!-- VanillaTilt CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.7.2/dist/vanilla-tilt.min.js"></script>
+
+</body>
+
+</html>
