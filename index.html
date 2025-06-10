@@ -11,6 +11,7 @@
       background: #222;
       height: 100vh;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
       font-family: 'Segoe UI', sans-serif;
@@ -25,6 +26,7 @@
       color: #000;
       position: relative;
       overflow: hidden;
+      margin-top: 20px;
     }
 
     .card-inner {
@@ -59,7 +61,6 @@
       color: #333;
     }
 
-    /* === Efecto Holográfico === */
     .holo-overlay {
       position: absolute;
       width: 100%;
@@ -84,7 +85,6 @@
       }
     }
 
-    /* Reflejos adicionales */
     .card::after {
       content: '';
       position: absolute;
@@ -96,13 +96,31 @@
       border-radius: 15px;
       z-index: 1;
     }
+
+    button {
+      padding: 10px 20px;
+      margin-bottom: 4em;
+      font-size: 16px;
+      font-weight: bold;
+      background: #ffcc00;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    }
+
+    button:hover {
+      background: #ffdb4d;
+    }
   </style>
 </head>
 
 <body>
 
-  <div class="card" data-tilt data-tilt-scale="1.05" data-tilt-max="25" data-tilt-speed="400" data-tilt-glare="true"
-    data-tilt-max-glare="0.4" data-tilt-gyroscope="true">
+  <button onclick="enableTilt()">Activar Efecto Giroscopio</button>
+
+  <div class="card" data-tilt data-tilt-scale="1.05" data-tilt-max="25" data-tilt-speed="400"
+    data-tilt-glare="true" data-tilt-max-glare="0.4" data-tilt-gyroscope="true">
     <div class="holo-overlay"></div>
     <div class="card-inner">
       <img src="https://mox.land/cdn/shop/files/sv4_ptbr_247.png?v=1701207865" alt="Pikachu" />
@@ -111,6 +129,30 @@
 
   <!-- VanillaTilt CDN -->
   <script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.7.2/dist/vanilla-tilt.min.js"></script>
+
+  <script>
+    function enableTilt() {
+      const elements = document.querySelectorAll("[data-tilt]");
+      if (typeof DeviceMotionEvent !== 'undefined' &&
+          typeof DeviceMotionEvent.requestPermission === 'function') {
+        // iOS 13+
+        DeviceMotionEvent.requestPermission()
+          .then(permissionState => {
+            if (permissionState === 'granted') {
+              VanillaTilt.init(elements);
+            } else {
+              alert("Permiso denegado para el giroscopio.");
+            }
+          })
+          .catch(error => {
+            console.error("Error al solicitar permiso:", error);
+          });
+      } else {
+        // Otros dispositivos
+        VanillaTilt.init(elements);
+      }
+    }
+  </script>
 
 </body>
 
